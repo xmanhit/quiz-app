@@ -10,7 +10,6 @@ import {
 const CountdownTimer = ({
   dispatch,
   questions,
-  // seconds,
   futureDate,
   size,
   strokeColor,
@@ -37,7 +36,6 @@ const CountdownTimer = ({
         setCountdown(timeago)
 
         if (countdown <= 0) {
-          setCountdown(seconds)
           dispatch({
             type: 'EndGame',
             pageName: ACTIONS.END_GAME,
