@@ -14,3 +14,13 @@ export function secondsToHHMMSS(seconds) {
 
   return HH == '00' ? `${MM}:${SS}` : `${HH}:${MM}:${SS}`
 }
+
+export function calculateFutureDate(seconds) {
+  const currentDate = new Date()
+  const futureDate = new Date(currentDate.getTime() + seconds * 1000)
+  return futureDate
+}
+
+export function futureDateToSeconds(futureDate) {
+  return (futureDate.getTime() - new Date().getTime()) / 1000
+}

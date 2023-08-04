@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { ACTIONS } from '../../config'
-import { countScore, secondsToHHMMSS } from '../../utils'
+import {
+  countScore,
+  secondsToHHMMSS,
+  calculateFutureDate,
+  futureDateToSeconds,
+} from '../../utils'
 
 const CountdownTimer = ({
   dispatch,
   questions,
-  seconds,
+  // seconds,
+  futureDate,
   size,
   strokeColor,
   strokeBgColor,
@@ -13,21 +19,25 @@ const CountdownTimer = ({
   isPlaying,
   isReview,
 }) => {
-  const milliseconds = seconds * 1000,
+  const seconds = futureDateToSeconds(futureDate)
+  const oneThousandthMs = 1000
+  const milliseconds = seconds * oneThousandthMs,
     radius = size / 2,
     circumference = size * Math.PI
 
-  const [countdown, setCountdown] = useState(milliseconds)
+  const [countdown, setCountdown] = useState(seconds)
   const strokeDashoffset = () =>
-    circumference - (countdown / milliseconds) * circumference
+    circumference -
+    ((countdown * oneThousandthMs) / milliseconds) * circumference
 
   useEffect(() => {
     if (isPlaying) {
+      const timeago = futureDateToSeconds(futureDate)
       const intervalId = setInterval(() => {
-        setCountdown(countdown - 10)
+        setCountdown(timeago)
 
-        if (countdown === 0) {
-          setCountdown(milliseconds)
+        if (countdown <= 0) {
+          setCountdown(seconds)
           dispatch({
             type: 'EndGame',
             pageName: ACTIONS.END_GAME,
@@ -52,7 +62,7 @@ const CountdownTimer = ({
     width: size,
   }
 
-  const viewSeconds = (countdown / 1000).toFixed()
+  const viewSeconds = secondsToHHMMSS(countdown)
 
   return (
     <div
@@ -74,7 +84,7 @@ const CountdownTimer = ({
           textAnchor="middle"
           style={textStyles}
         >
-          {isReview ? 'End!' : secondsToHHMMSS(viewSeconds)}
+          {isReview ? 'End!' : viewSeconds}
         </text>
         <circle
           strokeDasharray={circumference}

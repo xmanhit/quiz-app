@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ACTIONS } from '../../config'
-import { secondsToHHMMSS } from '../../utils'
+import { calculateFutureDate } from '../../utils'
 import CountdownTimer from '../../components/CountdownTimer'
 
 const InGame = ({
@@ -12,6 +12,7 @@ const InGame = ({
   isPlaying,
   seconds,
 }) => {
+  console.log(calculateFutureDate(seconds))
   const { id, question_content, answers, userAnswer } =
     questions[currentQuestionIndex]
   const questionNumber = currentQuestionIndex + 1
@@ -21,14 +22,14 @@ const InGame = ({
 
   return (
     <div className="min-h-screen bg-indigo-300">
-      <div className="flex flex-col justify-between items-center container mx-auto pt-12">
+      <div className="flex flex-col justify-between items-center container mx-auto px-4 pt-12">
         <div className="flex justify-center items-center gap-4">
           <button
-            className={
+            className={`flex items-center justify-center py-3 px-6 text-lg font-bold rounded-lg shadow-md text-white w-32 ${
               isFirstQuestion
-                ? 'flex items-center justify-center py-3 px-6 text-lg font-bold  rounded-lg shadow-md disabled:bg-gray-200 text-white w-32'
-                : 'flex items-center justify-center py-3 px-6 text-lg font-bold  rounded-lg shadow-md bg-gray-500 hover:bg-gray-300 text-white w-32'
-            }
+                ? 'disabled:bg-gray-200'
+                : 'bg-gray-500 hover:bg-gray-300'
+            }`}
             disabled={isFirstQuestion}
             onClick={() => {
               dispatch({
@@ -40,11 +41,11 @@ const InGame = ({
             Previous
           </button>
           <button
-            className={
+            className={`flex items-center justify-center py-3 px-6 text-lg font-bold rounded-lg shadow-md w-32 ${
               isLastQuestion
-                ? 'flex items-center justify-center py-3 px-6 text-lg font-bold  rounded-lg shadow-md w-32 bg-gray-200 hover:bg-gray-200 text-gray-300'
-                : 'flex items-center justify-center py-3 px-6 text-lg font-bold  rounded-lg shadow-md bg-green-300 hover:bg-green-500 hover:text-white w-32'
-            }
+                ? 'bg-gray-200 hover:bg-gray-200 text-gray-300'
+                : 'bg-green-300 hover:bg-green-500 hover:text-white'
+            }`}
             disabled={isLastQuestion}
             onClick={() => {
               dispatch({
@@ -98,12 +99,14 @@ const InGame = ({
             Restart
           </button>
         </div>
-        <div>
+        <div style={{ maxWidth: '100%' }}>
           <div
             className="rounded-md shadow-md relative pt-16 px-4 mt-16 mb-10 bg-white text-indigo-700 mx-auto"
             style={{
+              maxWidth: '100%',
               width: '45rem',
-              height: '14rem',
+              minHeight: '14rem',
+              paddingBottom: '1rem',
             }}
           >
             <div
@@ -123,6 +126,7 @@ const InGame = ({
                 strokeWidth={8}
                 isPlaying={isPlaying}
                 isReview={isReview}
+                futureDate={calculateFutureDate(seconds)}
               />
             </div>
             <div className="flex items-center justify-between text-lg font-medium mb-8">
@@ -141,18 +145,16 @@ const InGame = ({
           {answers.map(({ answer_content, correct }, index) => (
             <div key={index} className="col-span-12">
               <div
-                className={
+                className={`rounded-md flex items-center shadow-md my-3 px-4 cursor-pointer duration-50 bg-white mx-auto border-2 ${
                   isReview && userAnswer === index && !correct
-                    ? 'rounded-md flex items-center shadow-md my-3 px-4 cursor-pointer duration-50 bg-white mx-auto border-2 bg-red-500 text-white'
+                    ? 'bg-red-500 text-white'
                     : isReview && correct
-                    ? 'rounded-md flex items-center shadow-md my-3 px-4 cursor-pointer duration-50 bg-white mx-auto border-2 bg-green-500 text-white'
-                    : isReview
-                    ? 'rounded-md flex items-center shadow-md my-3 px-4 cursor-pointer duration-50 bg-white mx-auto border-2'
+                    ? 'bg-green-500 text-white'
                     : userAnswer === index
-                    ? 'rounded-md flex items-center shadow-md my-3 px-4 cursor-pointer duration-50 bg-white mx-auto border-2 hover:bg-indigo-900 hover:text-white bg-indigo-900 text-white'
-                    : 'rounded-md flex items-center shadow-md my-3 px-4 cursor-pointer duration-50 bg-white mx-auto border-2 hover:bg-indigo-900 hover:text-white'
-                }
-                style={{ width: '40rem', height: '4rem' }}
+                    ? 'hover:bg-indigo-900 hover:text-white bg-indigo-900 text-white'
+                    : 'hover:bg-indigo-900 hover:text-white'
+                }`}
+                style={{ maxWidth: '100%', width: '40rem', height: '4rem' }}
                 onClick={() => {
                   if (isReview) return
 
