@@ -146,7 +146,7 @@ const InGame = ({
                 className={
                   isReview && userAnswer === index && !correct
                     ? 'rounded-md flex items-center shadow-md my-3 px-4 cursor-pointer duration-50 bg-white mx-auto border-2 bg-red-500 text-white'
-                    : isReview && userAnswer === index && correct
+                    : isReview && correct
                     ? 'rounded-md flex items-center shadow-md my-3 px-4 cursor-pointer duration-50 bg-white mx-auto border-2 bg-green-500 text-white'
                     : isReview
                     ? 'rounded-md flex items-center shadow-md my-3 px-4 cursor-pointer duration-50 bg-white mx-auto border-2'
