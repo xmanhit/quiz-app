@@ -69,7 +69,7 @@ const InGame = ({
               if (window.confirm('Do you want to submit answers ?')) {
                 let score = 0
                 questions.forEach(({ answers, userAnswer }) => {
-                  if (answers[userAnswer].correct) {
+                  if (answers[userAnswer]?.correct) {
                     score++
                   }
                 })
