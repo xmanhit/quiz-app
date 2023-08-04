@@ -19,8 +19,6 @@ const InGame = ({
   const isFirstQuestion = currentQuestionIndex === 0
   const isLastQuestion = currentQuestionIndex === questions.length - 1
 
-  console.log(questions)
-
   return (
     <div className="min-h-screen bg-indigo-300">
       <div className="flex flex-col justify-between items-center container mx-auto pt-12">
