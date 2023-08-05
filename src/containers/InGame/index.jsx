@@ -2,8 +2,6 @@ import React from 'react'
 
 import { ACTIONS } from '../../config'
 import CountdownTimer from '../../components/CountdownTimer'
-
-const currentTime = new Date()
 const InGame = ({
   dispatch,
   questions,
@@ -11,6 +9,7 @@ const InGame = ({
   isReview,
   isPlaying,
 }) => {
+  const currentTime = new Date()
   const { id, question_content, answers, userAnswer } =
     questions[currentQuestionIndex]
   const questionNumber = currentQuestionIndex + 1
