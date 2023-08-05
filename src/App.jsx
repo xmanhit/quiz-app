@@ -60,14 +60,7 @@ function reducer(state, action) {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
   const { START_GAME, IN_GAME, END_GAME, REVIEW } = ACTIONS
-  const {
-    currentPage,
-    questions,
-    currentQuestionIndex,
-    isPlaying,
-    seconds,
-    startDate,
-  } = state
+  const { currentPage, questions, currentQuestionIndex, isPlaying } = state
 
   const pageComponent = (() => {
     switch (currentPage) {
@@ -80,8 +73,6 @@ function App() {
             questions={questions}
             currentQuestionIndex={currentQuestionIndex}
             isPlaying={isPlaying}
-            seconds={seconds}
-            startDate={startDate}
           />
         )
       case END_GAME:

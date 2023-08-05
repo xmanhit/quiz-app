@@ -3,14 +3,13 @@ import React from 'react'
 import { ACTIONS } from '../../config'
 import CountdownTimer from '../../components/CountdownTimer'
 
+const currentTime = new Date()
 const InGame = ({
   dispatch,
   questions,
   currentQuestionIndex,
   isReview,
   isPlaying,
-  seconds,
-  startDate,
 }) => {
   const { id, question_content, answers, userAnswer } =
     questions[currentQuestionIndex]
@@ -124,8 +123,7 @@ const InGame = ({
                 strokeWidth={8}
                 isPlaying={isPlaying}
                 isReview={isReview}
-                // seconds={seconds}
-                // futureDate={calculateFutureDate(startDate, seconds)}
+                currentTime={currentTime}
               />
             </div>
             <div className="flex items-center justify-between text-lg font-medium mb-8">
