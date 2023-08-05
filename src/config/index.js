@@ -17,3 +17,6 @@ export const initialState = {
   seconds: 10,
   startDate: new Date(),
 }
+
+export const seconds = 10
+export const startDate = new Date()

@@ -1,6 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { ACTIONS } from '../../config'
-import { countScore, secondsToHHMMSS, futureDateToSeconds } from '../../utils'
+import {
+  countScore,
+  secondsToHHMMSS,
+  calculateFutureTime,
+  futureDateToSeconds,
+} from '../../utils'
+import { seconds } from '../../config'
+
+const currentTime = new Date()
+const oneThousandthMs = 1000
+const ms = seconds * oneThousandthMs
+const futureTime = calculateFutureTime(currentTime, seconds)
+const secondsAgo = futureDateToSeconds(futureTime)
+const milliseconds = secondsAgo * oneThousandthMs
 
 const CountdownTimer = ({
   dispatch,
@@ -11,26 +24,17 @@ const CountdownTimer = ({
   strokeWidth,
   isPlaying,
   isReview,
-  seconds,
-  futureDate,
 }) => {
-  const timeAgo = futureDateToSeconds(futureDate)
-  const oneThousandthMs = 1000
-  const ms = seconds * oneThousandthMs
-  const milliseconds = timeAgo * oneThousandthMs,
-    radius = size / 2,
-    circumference = size * Math.PI
-
+  const radius = size / 2
+  const circumference = size * Math.PI
   const [countdown, setCountdown] = useState(milliseconds)
   const strokeDashoffset = () =>
     circumference - (countdown / ms) * circumference
 
   useEffect(() => {
     if (isPlaying) {
-      const timeago = futureDateToSeconds(futureDate)
-      // console.log(timeago)
       const intervalId = setInterval(() => {
-        if (timeago <= 0) {
+        if (countdown <= 0) {
           dispatch({
             type: 'EndGame',
             pageName: ACTIONS.END_GAME,
@@ -38,7 +42,7 @@ const CountdownTimer = ({
             isPlaying: false,
           })
         } else {
-          setCountdown(timeago * oneThousandthMs)
+          setCountdown(countdown - 10)
         }
       }, 10)
       return () => clearInterval(intervalId)

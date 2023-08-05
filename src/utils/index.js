@@ -15,7 +15,7 @@ export function secondsToHHMMSS(seconds) {
   return HH == '00' ? `${MM}:${SS}` : `${HH}:${MM}:${SS}`
 }
 
-export function calculateFutureDate(startDate, seconds) {
+export function calculateFutureTime(startDate, seconds) {
   const currentDate = new Date(startDate)
   const futureDate = new Date(currentDate.getTime() + seconds * 1000)
   return futureDate
