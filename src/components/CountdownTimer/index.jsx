@@ -20,7 +20,7 @@ const CountdownTimer = ({
   strokeWidth,
   isPlaying,
   isReview,
-  currentTime,
+  startTime,
 }) => {
   const radius = size / 2
   const circumference = size * Math.PI
@@ -29,7 +29,7 @@ const CountdownTimer = ({
     circumference - (countdown / startMs) * circumference
 
   useEffect(() => {
-    const futureTime = calculateFutureTime(currentTime, START_SECONDS)
+    const futureTime = calculateFutureTime(startTime, START_SECONDS)
     const secondsAgo = futureDateToSeconds(futureTime)
     const msAgo = secondsAgo * oneThousandthMs
     if (isPlaying) {

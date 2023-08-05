@@ -8,8 +8,9 @@ const InGame = ({
   currentQuestionIndex,
   isReview,
   isPlaying,
+  startTime,
 }) => {
-  const currentTime = new Date()
+  console.log(startTime)
   const { id, question_content, answers, userAnswer } =
     questions[currentQuestionIndex]
   const questionNumber = currentQuestionIndex + 1
@@ -122,7 +123,7 @@ const InGame = ({
                 strokeWidth={8}
                 isPlaying={isPlaying}
                 isReview={isReview}
-                currentTime={currentTime}
+                startTime={startTime}
               />
             </div>
             <div className="flex items-center justify-between text-lg font-medium mb-8">

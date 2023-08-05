@@ -18,7 +18,7 @@ function reducer(state, action) {
         ...state,
         currentPage: pageName,
         isPlaying: isPlaying,
-        startDate: new Date(),
+        startTime: new Date(),
       }
     case 'EndGame':
       return {
@@ -60,7 +60,8 @@ function reducer(state, action) {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
   const { START_GAME, IN_GAME, END_GAME, REVIEW } = ACTIONS
-  const { currentPage, questions, currentQuestionIndex, isPlaying } = state
+  const { currentPage, questions, currentQuestionIndex, isPlaying, startTime } =
+    state
 
   const pageComponent = (() => {
     switch (currentPage) {
@@ -73,6 +74,7 @@ function App() {
             questions={questions}
             currentQuestionIndex={currentQuestionIndex}
             isPlaying={isPlaying}
+            startTime={startTime}
           />
         )
       case END_GAME:

@@ -23,6 +23,7 @@ const StartGame = ({ dispatch }) => {
                   type: 'StartGame',
                   pageName: ACTIONS.IN_GAME,
                   isPlaying: true,
+                  startTime: new Date(),
                 })
               }
             >
