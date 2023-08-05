@@ -9,7 +9,7 @@ import EndGame from './containers/EndGame'
 import Review from './containers/Review'
 
 function reducer(state, action) {
-  const { type, pageName, isPlaying, score, answer, index, countdown } = action
+  const { type, pageName, isPlaying, score, answer, index } = action
   const { currentQuestionIndex, questions } = state
 
   switch (type) {
@@ -18,6 +18,7 @@ function reducer(state, action) {
         ...state,
         currentPage: pageName,
         isPlaying: isPlaying,
+        startDate: new Date(),
       }
     case 'EndGame':
       return {
@@ -46,11 +47,6 @@ function reducer(state, action) {
         ...state,
         currentPage: pageName,
       }
-    case 'setCountdown':
-      return {
-        ...state,
-        seconds: countdown,
-      }
     case 'setIsPlaying':
       return {
         ...state,
@@ -64,8 +60,14 @@ function reducer(state, action) {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
   const { START_GAME, IN_GAME, END_GAME, REVIEW } = ACTIONS
-  const { currentPage, questions, currentQuestionIndex, isPlaying, seconds } =
-    state
+  const {
+    currentPage,
+    questions,
+    currentQuestionIndex,
+    isPlaying,
+    seconds,
+    startDate,
+  } = state
 
   const pageComponent = (() => {
     switch (currentPage) {
@@ -79,6 +81,7 @@ function App() {
             currentQuestionIndex={currentQuestionIndex}
             isPlaying={isPlaying}
             seconds={seconds}
+            startDate={startDate}
           />
         )
       case END_GAME:

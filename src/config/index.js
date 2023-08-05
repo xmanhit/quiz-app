@@ -14,5 +14,6 @@ export const initialState = {
   score: 0,
   currentQuestionIndex: 0,
   isPlaying: false,
-  seconds: 90,
+  seconds: 10,
+  startDate: new Date(),
 }

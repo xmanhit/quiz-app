@@ -11,8 +11,9 @@ const InGame = ({
   isReview,
   isPlaying,
   seconds,
+  startDate,
 }) => {
-  console.log(calculateFutureDate(seconds))
+  console.log(calculateFutureDate(startDate, seconds))
   const { id, question_content, answers, userAnswer } =
     questions[currentQuestionIndex]
   const questionNumber = currentQuestionIndex + 1
@@ -117,16 +118,16 @@ const InGame = ({
               }}
             >
               <CountdownTimer
-                questions={questions}
                 dispatch={dispatch}
-                seconds={seconds}
+                questions={questions}
                 size={77}
                 strokeBgColor="white"
                 strokeColor="rgb(79, 70, 229)"
                 strokeWidth={8}
                 isPlaying={isPlaying}
                 isReview={isReview}
-                futureDate={calculateFutureDate(seconds)}
+                seconds={seconds}
+                futureDate={calculateFutureDate(startDate, seconds)}
               />
             </div>
             <div className="flex items-center justify-between text-lg font-medium mb-8">

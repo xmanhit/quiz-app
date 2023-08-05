@@ -1,47 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import { ACTIONS } from '../../config'
-import {
-  countScore,
-  secondsToHHMMSS,
-  calculateFutureDate,
-  futureDateToSeconds,
-} from '../../utils'
+import { countScore, secondsToHHMMSS, futureDateToSeconds } from '../../utils'
 
 const CountdownTimer = ({
   dispatch,
   questions,
-  futureDate,
   size,
   strokeColor,
   strokeBgColor,
   strokeWidth,
   isPlaying,
   isReview,
+  seconds,
+  futureDate,
 }) => {
-  const seconds = futureDateToSeconds(futureDate)
+  const timeAgo = futureDateToSeconds(futureDate)
   const oneThousandthMs = 1000
-  const milliseconds = seconds * oneThousandthMs,
+  const ms = seconds * oneThousandthMs
+  const milliseconds = timeAgo * oneThousandthMs,
     radius = size / 2,
     circumference = size * Math.PI
 
-  const [countdown, setCountdown] = useState(seconds)
+  const [countdown, setCountdown] = useState(milliseconds)
   const strokeDashoffset = () =>
-    circumference -
-    ((countdown * oneThousandthMs) / milliseconds) * circumference
+    circumference - (countdown / ms) * circumference
 
   useEffect(() => {
     if (isPlaying) {
       const timeago = futureDateToSeconds(futureDate)
+      // console.log(timeago)
       const intervalId = setInterval(() => {
-        setCountdown(timeago)
-
-        if (countdown <= 0) {
+        if (timeago <= 0) {
           dispatch({
             type: 'EndGame',
             pageName: ACTIONS.END_GAME,
             score: countScore(questions),
             isPlaying: false,
           })
+        } else {
+          setCountdown(timeago * oneThousandthMs)
         }
       }, 10)
       return () => clearInterval(intervalId)
@@ -60,7 +57,7 @@ const CountdownTimer = ({
     width: size,
   }
 
-  const viewSeconds = secondsToHHMMSS(countdown)
+  const viewSeconds = countdown / oneThousandthMs
 
   return (
     <div
@@ -82,7 +79,7 @@ const CountdownTimer = ({
           textAnchor="middle"
           style={textStyles}
         >
-          {isReview ? 'End!' : viewSeconds}
+          {isReview ? 'End!' : secondsToHHMMSS(viewSeconds)}
         </text>
         <circle
           strokeDasharray={circumference}
