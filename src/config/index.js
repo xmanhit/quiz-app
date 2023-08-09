@@ -17,4 +17,4 @@ export const initialState = {
   startTime: null,
 }
 
-export const START_SECONDS = 10
+export const START_SECONDS = 90
